@@ -297,12 +297,12 @@ void preprocess(GRID *g, int myid)
    volmax=(volmax > g->vol[i]) ? volmax : g->vol[i];
   }
   
-  if(myid==0)
-  {
-  tracef(volmin);
-  tracef(volmax);
-  tracef(g->vol[0]);
-  }
+  //if(myid==0)
+  //{
+  //tracef(volmin);
+  //tracef(volmax);
+  //tracef(g->vol[0]);
+  //}
 
   //=============================================================
   // find cell to chain connectivity

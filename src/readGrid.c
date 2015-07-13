@@ -165,7 +165,7 @@ void readGrid(GRID *g, int myid, int nproc)
   g->nchains =ii-1;
 
   //
-  if(myid==0) trace(g->nmaxchain);
+  // if(myid==0) trace(g->nmaxchain);
   //
 
   //========================================================
@@ -424,16 +424,16 @@ void readGrid(GRID *g, int myid, int nproc)
   fscanf(fp,"%d",&(g->nstrand));
   fclose(fp);
 
-  if(myid==0)
-  {
-  printf("#ham3d: Finished reading files\n");
-  trace(g->nnodes);
-  trace(g->ncells);
-  trace(g->nfaces);
-  trace(g->ncolors);
-  trace(g->nchains);
-  trace(g->nchainFaces);
-  trace(g->nstrand);
-  }
+  // if(myid==0)
+  // {
+  // printf("#ham3d: Finished reading files\n");
+  // trace(g->nnodes);
+  // trace(g->ncells);
+  // trace(g->nfaces);
+  // trace(g->ncolors);
+  // trace(g->nchains);
+  // trace(g->nchainFaces);
+  // trace(g->nstrand);
+  // }
 }
 

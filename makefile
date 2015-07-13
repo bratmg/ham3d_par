@@ -58,14 +58,15 @@ OBJECTS = $(SRCDIR)/ham3d.o \
 	       $(SRCDIR)/weno.o \
 	       $(SRCDIR)/weno_deriv.o \
 	       $(SRCDIR)/crweno.o \
-	       $(SRCDIR)/tri.o
+	       $(SRCDIR)/tri.o\
+	       $(SRCDIR)/io.o
 
 # Link Instruction
 ham2d: $(OBJECTS)
 	$(MPIFC) $(OBJECTS) $(LFLAGS) -o ham3d
 
 clean:
-	@rm -rf *.o *.mod *.*~ ham3d
+	@rm -rf ./$(SRCDIR)/*.o *.mod *.*~ ham3d
 
 %.o:%.F90
 	$(F90) $(FFLAGS) -c $< -o $*.o

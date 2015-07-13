@@ -62,6 +62,8 @@ int main(int argc, char **argv)
   printf("Hello world! I'm process %i out of %i process\n",myid,nproc);
   ierr = MPI_Barrier(MPI_COMM_WORLD);
 
+  if(myid==0)welcome();
+
   // Read in file input from input.ham2d
   fp=fopen("input.ham3d","r");
   while((c=fgetc(fp))!='\n');
@@ -82,11 +84,11 @@ int main(int argc, char **argv)
   fscanf(fp,"output=%d\n",&outform);
   fclose(fp);
 
-  if(myid==0)
-  {
-  trace(nsteps);
-  tracef(dt);
-  }
+  // if(myid==0)
+  // {
+  // trace(nsteps);
+  // tracef(dt);
+  // }
 
   //
   ngrids=1;
@@ -104,7 +106,9 @@ int main(int argc, char **argv)
       readGrid(&g[i],myid,nproc); //need to strand grid reading and make connectivity
       g[i].visc=visc;
       g[i].test=test;
+      s[i].scheme = scheme;
       s[i].outform=outform;
+      s[i].nsteps = nsteps;
       
       preprocess(&g[i],myid);
       initflow(&g[i],&s[i],myid);
@@ -126,7 +130,7 @@ int main(int argc, char **argv)
   //ierr = MPI_Barrier(MPI_COMM_WORLD);
   //exit(1);
 
-  if(myid==0) tracef(CFL)
+  if(myid==0) basicScreenOutput(g,s);
  
   // =========================================================
   // now run chosen number of time steps
@@ -139,47 +143,69 @@ int main(int argc, char **argv)
 
   fp = fopen(fname,"w");
 
-  if(myid==0)
-  {
-    printf("#ham3d : using %s scheme for inversion\n",scheme);  
-  }
+  // if(myid==0)
+  // {
+  //   printf("#ham3d : using %s scheme for inversion\n",scheme);  
+  // }
   cpu_time_used=0;
 
   ierr = MPI_Barrier(MPI_COMM_WORLD);
   // main iteration
   for (n=0;n<nsteps;n++) 
-   { 
-      for(i=0;i<ngrids;i++) 
- 	{ 
-	  start=clock();
+  { 
+    for(i=0;i<ngrids;i++) 
+    { 
+      start=clock();
 
-	  stepSolution(scheme,&g[i],&s[i],dt,&l2rho,&linfrho,myid);
-	  
-	  computeForce(&g[i],&s[i]);
-	  
-	  end = clock();
-	  
-	  cpu_time_used+=(((double) (end - start)) / CLOCKS_PER_SEC);
-     
-     if(myid==0) printf("%d %e %e %2.4f %2.4f %2.4f\n",n,l2rho,linfrho,s[i].cl,s[i].cd,cpu_time_used);
-     fprintf(fp,"%d %e %e %2.4f %2.4f %2.4f\n",n,l2rho,linfrho,s[i].cl,s[i].cd,cpu_time_used);
+      stepSolution(scheme,&g[i],&s[i],dt,&l2rho,&linfrho,myid);
+      
+      computeForce(&g[i],&s[i]);
+      
+      end = clock();
+      
+      cpu_time_used+=(((double) (end - start)) / CLOCKS_PER_SEC);
+       
+      //
+      // print to screen
+      //
+      if(myid == 0 && n == 0)
+      {
+        printf("\n --------------------------------------------------------------------------------------------------\n");
+        printf(" |   Iter   | L_2 (density) | L_inf (density) |    Cl (lift)   |     Cd (drag)   | CPU Time (sec) |\n");
+        printf(" --------------------------------------------------------------------------------------------------\n");
+      }
 
-	}
-	ierr = MPI_Barrier(MPI_COMM_WORLD);
-        
-        //write solution
-        if((n+1)%nwrite==0||n==0)
-        { 
-        nn = (n+1)/nwrite;
-        outputSolution(&g[0],&s[0],nn,myid,nproc); 
-        }
-        //printf("myid:%d, iter:%d\n",myid,n);
-    } 
-    fclose(fp);
-    printf("finish probram, myid:%d\n",myid);
+      if(myid == 0) printf(" |  %*d  |  %e |   %e  |  %e |   %e  |  %e  |\n",
+         6,n,l2rho,linfrho,s[i].cl,s[i].cd,cpu_time_used );
+
+      //if(myid==0) printf("%d %e %e %2.4f %2.4f %2.4f\n",n,l2rho,linfrho,s[i].cl,s[i].cd,cpu_time_used);
+      fprintf(fp,"%d %e %e %2.4f %2.4f %2.4f\n",n,l2rho,linfrho,s[i].cl,s[i].cd,cpu_time_used);
+
+
+      if(myid == 0 && n == nsteps)
+      {
+        printf("\n --------------------------------------------------------------------------------------------------\n");
+        printf(" |   Iter   | L_2 (density) | L_inf (density) |    Cl (lift)   |     Cd (drag)   | CPU Time (sec) |\n");
+        printf(" --------------------------------------------------------------------------------------------------\n");
+      }
+
+    }
+  
     ierr = MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Finalize();
-    return(0);
+        
+    //write solution
+    if((n+1)%nwrite==0||n==0)
+    { 
+      nn = (n+1)/nwrite;
+      outputSolution(&g[0],&s[0],nn,myid,nproc); 
+    }
+
+  } // n loop
+  fclose(fp);
+  
+  ierr = MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Finalize();
+  return 0;
 }
 
 //######################################################################

@@ -247,7 +247,7 @@ if (rightCell==-2)
       {
         communicationLinear(g,s,myid);
         computeLinearRHS(g,s,cflnum,&linearl2rho,&linearlinfrho,myid);
-        if(myid==0)  tracef(linearl2rho);
+        //if(myid==0)  tracef(linearl2rho);
       }
     }
   //

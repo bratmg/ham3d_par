@@ -640,6 +640,6 @@ void computeRHSk(GRID *g,SOLN *s,double *l2rho, double*linfrho, int myid)
     *l2rho = *l2rho + (s->r[5*i])*(s->r[5*i]);
   }
   *l2rho = sqrt(*l2rho/(g->ncells));
-  if(myid==0) tracef(s->r[0]);
+  //if(myid==0) tracef(s->r[0]);
   //trace(icell);
 }

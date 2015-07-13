@@ -29,12 +29,12 @@ void initflow(GRID *g,SOLN *s, int myid)
   s->rey=s->rey/s->mach;
   fclose(fp);
 
-  if(myid==0)
-  {
-  tracef(s->mach);
-  tracef(s->alpha);
-  tracef(s->beta);
-  }
+  // if(myid==0)
+  // {
+  // tracef(s->mach);
+  // tracef(s->alpha);
+  // tracef(s->beta);
+  // }
   //
   if(g->test==0 || g->test==1)
   {
@@ -52,12 +52,12 @@ void initflow(GRID *g,SOLN *s, int myid)
 
   s->einf = pinf/(gamm-1)+0.5*rinf*(s->uinf*s->uinf+
                                     s->vinf*s->vinf+s->winf*s->winf);
-  if(myid==0)
-  {
-  tracef(s->uinf);
-  tracef(s->vinf);
-  tracef(s->winf);
-  }
+  // if(myid==0)
+  // {
+  // tracef(s->uinf);
+  // tracef(s->vinf);
+  // tracef(s->winf);
+  // }
 
   s->gm1=gamm-1;
   s->c2b=0.3678;
