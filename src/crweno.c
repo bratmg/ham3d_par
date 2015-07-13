@@ -7,8 +7,8 @@
 // ###############################################################
 #include <stdio.h>
 #include <stdlib.h>
-#include "ham2dtypes.h"
-#include "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include "ham3dFunctionDefs.h"
 
 void crweno(double **f,  //fluxes at each edge
             double **ql, // left states

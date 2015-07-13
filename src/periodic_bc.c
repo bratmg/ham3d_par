@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "ham2dtypes.h"
-#include "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include "ham3dFunctionDefs.h"
 #define nearBodyRadius 3.0
 
 void periodic_bc(GRID *g)

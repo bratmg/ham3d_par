@@ -3,14 +3,14 @@
 #                       MAKEFILE FOR HAMSTR 3D                      #
 #                                                                   #
 #####################################################################
-F90 = ifort
-#F90 = gfortran
-CC  = icc
-#CC  = gcc
+#F90 = ifort
+F90 = gfortran
+#CC  = icc
+CC  = gcc
 MPIFC = /usr/local/bin/mpicc
 
-FFLAGS =  -w -O2 -r8 
-#FFLAGS  =  -w -O2 -fdefault-real-8 # uncomment this for gfortran
+#FFLAGS =  -w -O2 -r8 
+FFLAGS  =  -w -O2 -fdefault-real-8 # uncomment this for gfortran
 CFLAGS =  -w -O2 #-g #-traceback  -check uninit  #-warn-all#-g #-O2 #-g
 
 #FFLAGS =  -w -O2 -lgfortran -fdefault-real-8 # uncomment this for gfortran
@@ -33,7 +33,7 @@ OBJECTS = $(SRCDIR)/ham3d.o \
           $(SRCDIR)/computeRHSk.o \
           $(SRCDIR)/computeRHSkv.o \
           $(SRCDIR)/computeLinearRHS.o \
-          $(SRCDIR)/flux_roe3d.o 
+          $(SRCDIR)/flux_roe3d.o \
           $(SRCDIR)/wallFlux.o\
           $(SRCDIR)/flux_roe2d.o \
           $(SRCDIR)/periodic_bc.o \

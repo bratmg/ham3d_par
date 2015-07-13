@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ham2dtypes.h"
-#include "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include "ham3dFunctionDefs.h"
 void updateSoln(double *qsrc,double *qdest, double *res,double *sigma,
 	double dt,double CFL,double coef,int ncells)
 {

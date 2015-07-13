@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
-#include "ham2dtypes.h"
-#include  "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include  "ham3dFunctionDefs.h"
 
 void computeTimeScaling(GRID *g, SOLN *s,double cflnum,double dt,int istep)
 {

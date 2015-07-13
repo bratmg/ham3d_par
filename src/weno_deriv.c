@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "ham2dtypes.h"
-#include "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include "ham3dFunctionDefs.h"
 
 //double weno5_d(double a,double  b,double  c,double  d,double  e,double  a_d, double  b_d,double  c_d, double  d_d,double  e_d,double  epsw);
 

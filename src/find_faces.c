@@ -1,7 +1,7 @@
 // -*- c++ -*-
 #include <stdlib.h>
 #include <stdio.h>
-#include "ham2dtypes.h"
+#include "ham3dtypes.h"
 //
 void insert_edge(int cellindx,int faceindx,
 		 int e[2],int *flist, int *iptr, int *nfaces)

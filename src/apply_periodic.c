@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
-#include "ham2dtypes.h"
-#include "ham2dFunctionDefs.h"
+#include "ham3dtypes.h"
+#include "ham3dFunctionDefs.h"
 void apply_periodic(GRID *g,int f1, int f2, int m)
 {  
   int i,j,k,f,n;
